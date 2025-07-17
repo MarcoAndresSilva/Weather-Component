@@ -1,1 +1,50 @@
-<p>weather-search works!</p>
+<div class="weather-search-container">
+    <div class="header">
+        <mat-icon class="header-icon">wb_sunny</mat-icon>
+        <h1>Aplicación del Clima</h1>
+    </div>
+
+    <form class="search-form" (ngSubmit)="searchWeather()">
+        <mat-form-field appearance="outline" class="city-input">
+            <mat-label>Introduce una ciudad</mat-label>
+            <input matInput [formControl]="cityControl" placeholder="Ej: Paris">
+            <mat-error *ngIf="cityControl.hasError('required')">El campo es obligatorio.</mat-error>
+            <mat-error *ngIf="cityControl.hasError('minlength')">Debe tener al menos 2 letras.</mat-error>
+        </mat-form-field>
+        <button mat-fab extended color="primary" type="submit" [disabled]="isLoading || cityControl.invalid">
+            <mat-icon>search</mat-icon>
+                Buscar
+        </button>
+    </form>
+
+    <div class="result-area">
+    <!-- Estado de Carga -->
+        <div *ngIf="isLoading" class="feedback-container">
+            <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+            <p>Buscando...</p>
+        </div>
+        <!-- Estado de Error -->
+        <div *ngIf="errorMessage && !isLoading" class="feedback-container error">
+            <mat-icon>error_outline</mat-icon>
+            <p>{{ errorMessage }}</p>
+        </div>
+        <!-- Estado de Éxito (Resultado) -->
+        <div *ngIf="weatherData && !isLoading" class="results-container">
+            <mat-card class="weather-card">
+                <mat-card-header>
+                    <mat-card-title>{{ weatherData.name }}, {{ weatherData.sys.country }}</mat-card-title>
+                    <mat-card-subtitle>{{ weatherData.weather[0].description | titlecase }}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image class="weather-icon" [src]="getWeatherIconUrl(weatherData.weather[0].icon)" [alt]="weatherData.weather[0].description">
+                <mat-card-content>
+                    <p class="temperature">{{ weatherData.main.temp | number:'1.0-0' }}°C</p>
+                    <div class="details">
+                        <p><strong>Sensación:</strong> {{ weatherData.main.feels_like | number:'1.0-0' }}°C</p>
+                        <p><strong>Humedad:</strong> {{ weatherData.main.humidity }}%</p>
+                        <p><strong>Viento:</strong> {{ weatherData.wind.speed }} m/s</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
