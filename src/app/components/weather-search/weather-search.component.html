@@ -1,20 +1,26 @@
+<p style="color: red;">🧪 El componente se está mostrando</p>
 <div class="weather-search-container">
     <div class="header">
         <mat-icon class="header-icon">wb_sunny</mat-icon>
         <h1>Aplicación del Clima</h1>
     </div>
 
-    <form class="search-form" (ngSubmit)="searchWeather()">
+    <form class="search-form" (ngSubmit)="searchWeather($event)">
         <mat-form-field appearance="outline" class="city-input">
             <mat-label>Introduce una ciudad</mat-label>
             <input matInput [formControl]="cityControl" placeholder="Ej: Paris">
             <mat-error *ngIf="cityControl.hasError('required')">El campo es obligatorio.</mat-error>
             <mat-error *ngIf="cityControl.hasError('minlength')">Debe tener al menos 2 letras.</mat-error>
         </mat-form-field>
-        <button mat-fab extended color="primary" type="submit" [disabled]="isLoading || cityControl.invalid">
+        <button mat-fab extended color="primary"
+         type="submit" 
+         [disabled]="isLoading || cityControl.invalid"
+         (click)="searchWeather($event  )"
+         >
             <mat-icon>search</mat-icon>
                 Buscar
         </button>
+        
     </form>
 
     <div class="result-area">

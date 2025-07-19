@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { tap } from 'rxjs/operators'; // Añade 'tap' a los imports de rxjs/operators
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +17,7 @@ import { WeatherService } from '../../services/weather.service';
 
 @Component({
   selector: 'app-weather-search',
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,7 +29,7 @@ import { WeatherService } from '../../services/weather.service';
     MatProgressSpinnerModule
   ],
   templateUrl: './weather-search.component.html',
-  styleUrl: './weather-search.component.scss'
+  styleUrls: ['./weather-search.component.scss']
 })
 export class WeatherSearchComponent {
 
@@ -36,32 +38,43 @@ export class WeatherSearchComponent {
   isLoading = false;
   errorMessage:string | null = null;
 
-  constructor(private weatherService: WeatherService) { }
+  constructor(private weatherService: WeatherService) {
+     console.log('WeatherSearchComponent cargado');
+   }
 
-  searchWeather(): void {
-    if(this.cityControl.invalid)
-      return
-    
+ searchWeather(event: Event): void {
+  event.preventDefault(); // 👈 Detiene la recarga de la página
 
-    this.isLoading = true;
-    this.weatherData = null;
-    this.errorMessage = null;
-
-    const city = this.cityControl.value!;
-
-    this.weatherService.getWeatherByCity(city).pipe(
-      finalize(() => {
-        this.isLoading = false;
-      })
-    ).subscribe({
-      next: (data) => {
-        this.weatherData = data;
-      },
-      error: (error) => {
-        this.errorMessage = error.message;
-      }
-    });
+  if(this.cityControl.invalid){
+    console.log('El formulario es inválido, deteniendo la búsqueda.');
+    return;
   }
+
+  console.log('El formulario es válido, iniciando la búsqueda...');
+  this.isLoading = true;
+  this.weatherData = null;
+  this.errorMessage = null;
+
+  const city = this.cityControl.value!;
+  console.log(`Llamando al servicio para la ciudad: ${city}`);
+
+  this.weatherService.getWeatherByCity(city).pipe(
+    tap(data => console.log('Tap 1 - Datos recibidos:', data)),
+    finalize(() => {
+      this.isLoading = false;
+      console.log('Tap 2 - Finalize se ha ejecutado');
+    })
+  ).subscribe({
+    next: (data) => {
+      console.log('Bloque next - Asignando datos a weatherData:', data);
+      this.weatherData = data;
+    },
+    error: (error) => {
+      console.log('Bloque error - Asignando error a errorMessage:', error.message);
+      this.errorMessage = error.message;
+    }
+  });
+}
 
   getWeatherIconUrl(iconCode: string): string {
     return `http://openweathermap.org/img/wn/${iconCode}@4x.png`;

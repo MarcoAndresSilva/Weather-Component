@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 export class WeatherService {
 
   // variables de entorno
-  private apiKey = '7925f83ebabc9319a5a41f84266ccd4b';
+  private apiKey = '15c84a944f2a40c5d45a9308dfd73b66';
   private url = 'https://api.openweathermap.org/data/2.5/weather';
 
   constructor(private http: HttpClient) { }
