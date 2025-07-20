@@ -14,6 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // Importación del Servicio
 import { WeatherService } from '../../services/weather.service';
 
+// Importación del result componente
+import { WeatherResultComponent } from '../weather-result/weather-result.component';
 
 @Component({
   selector: 'app-weather-search',
@@ -21,6 +23,7 @@ import { WeatherService } from '../../services/weather.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    WeatherResultComponent,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

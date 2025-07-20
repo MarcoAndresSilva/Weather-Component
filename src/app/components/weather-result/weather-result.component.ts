@@ -1,10 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-weather-result',
-  standalone: true;
-  imports: [CommonModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './weather-result.component.html',
   styleUrls: ['./weather-result.component.scss']
 })

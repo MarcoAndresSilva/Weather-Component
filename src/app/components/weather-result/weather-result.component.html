@@ -1,1 +1,29 @@
-<p>weather-result works!</p>
+
+<!-- Estado de Carga -->
+<div *ngIf="isLoading" 
+    class="feedback-container">
+    <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+    <p>Buscando...</p>
+</div>
+<!-- Estado de Error -->
+<div *ngIf="errorMessage && !isLoading" 
+    class="feedback-container error">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage }}</p>
+</div>
+<!-- Estado de Éxito (Resultado) -->
+<div *ngIf="weatherData && !isLoading" 
+    class="results-container">
+    <mat-card class="weather-card">
+        <h2>{{ weatherData.name }}, {{ weatherData.sys.country }}</h2>
+        <div class="description">{{ weatherData.weather[0].description | titlecase }}</div>
+        <img [src]="getWeatherIconUrl(weatherData.weather[0].icon)" 
+            alt="Weather icon" />
+        <div class="details">
+            <p><span>Temperatura:</span> {{ weatherData.main.temp }}°C</p>
+            <p><span>Sensación:</span> {{ weatherData.main.feels_like }}°C</p>
+            <p><span>Humedad:</span> {{ weatherData.main.humidity }}%</p>
+            <p><span>Viento:</span> {{ weatherData.wind.speed }} m/s</p>
+        </div>
+    </mat-card>
+</div>

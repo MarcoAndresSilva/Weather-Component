@@ -1,0 +1,45 @@
+:host {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.weather-card {
+    width: 100%;
+    max-width: 350px;
+    background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+
+    h2 {
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+    .description {
+        font-style: italic;
+        margin-bottom: 1rem;
+        color: #b3b3ff;
+    }
+
+    img {
+        width: 100px;
+        height: 100px;
+        margin: 1rem auto;
+    }
+
+    .details {
+        font-size: 0.95rem;
+
+        p {
+            margin: 0.3rem 0;
+            span {
+                font-weight: 600;
+                color: #8ab4f8;
+            }
+        }
+    }
+}
