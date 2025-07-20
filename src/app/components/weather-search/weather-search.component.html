@@ -11,19 +11,27 @@
             <mat-error *ngIf="cityControl.hasError('required')">El campo es obligatorio.</mat-error>
             <mat-error *ngIf="cityControl.hasError('minlength')">Debe tener al menos 2 letras.</mat-error>
         </mat-form-field>
-        <button mat-fab extended color="primary"
-            type="submit" 
-            [disabled]="isLoading || cityControl.invalid"
-            (click)="searchWeather($event  )"
-            >
-            <mat-icon>search</mat-icon>
-                Buscar
-        </button>
-        <button mat-stroked-button color="warn" 
-            (click)="onReset()" 
-            style="margin-left: 1rem;">
-            Reset
-        </button>
+        <div class="button-group">
+            <button mat-fab extended 
+                    color="primary"
+                    type="submit" 
+                    [disabled]="isLoading || cityControl.invalid"
+                    (click)="searchWeather($event)"
+                >
+                <mat-icon>search</mat-icon>
+                    Buscar
+            </button>
+            <button mat-fab extended 
+                    color="primary" 
+                    type="button" 
+                    [disabled]=" isLoading || cityControl.invalid"
+                    (click)="onReset()" 
+                >
+                <mat-icon>refresh</mat-icon>
+                    Limpiar
+            </button>
+        </div>
+        
         
     </form>
 
