@@ -42,11 +42,11 @@ export class WeatherSearchComponent {
   errorMessage:string | null = null;
 
   constructor(private weatherService: WeatherService) {
-     console.log('WeatherSearchComponent cargado');
-   }
+    console.log('WeatherSearchComponent cargado');
+  }
 
- searchWeather(event: Event): void {
-  event.preventDefault(); // 👈 Detiene la recarga de la página
+  searchWeather(event: Event): void {
+    event.preventDefault(); // 👈 Detiene la recarga de la página
 
   if(this.cityControl.invalid){
     console.log('El formulario es inválido, deteniendo la búsqueda.');
@@ -78,6 +78,13 @@ export class WeatherSearchComponent {
     }
   });
 }
+
+  onReset(): void {
+    this.cityControl.reset();
+    this.weatherData = null;
+    this.isLoading = false;
+    this.errorMessage = null;
+  }
 
   getWeatherIconUrl(iconCode: string): string {
     return `http://openweathermap.org/img/wn/${iconCode}@4x.png`;
